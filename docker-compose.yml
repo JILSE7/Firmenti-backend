@@ -1,0 +1,16 @@
+version: '3.1'
+
+services: 
+  postgres-db:
+    image: postgres:15.1
+    container_name: postgres-db
+    restart: always
+    environment: 
+      POSTGRES_DB: firmenti
+      POSTGRES_USER: firmenti
+      POSTGRES_PASSWORD: secret1234
+    
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
