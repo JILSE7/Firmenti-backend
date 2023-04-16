@@ -1,19 +1,20 @@
-import { NextFunction, Request, Response } from "express";
-import { categoryService } from "../services";
-import { CategoryDTO } from "../dto";
+import { Request, Response } from "express";
+import userService from "../services/user.service";
 import { CustomError } from "../../utilities/customError.utilities";
+import { UserDTO } from "../dto";
 
-const registerCategory = async(req: Request, res: Response, next: NextFunction) => {
+
+const registerUser = async(req: Request, res: Response) => {
   try {
-    const body = req.body as CategoryDTO
-    const category = await categoryService.createCategory(body)
-    
+    const body: UserDTO = req.body
+    const user = await userService.createUser(body)
+
     return res.status(201).json({
       ok: true,
-      data: category
+      data: user
     })
 
-  } catch (e: unknown) {
+  } catch (e) {
     if (e instanceof Error) {
       return res.status(e instanceof CustomError ? e.statusCode : 500).json({
         ok: false,
@@ -21,15 +22,17 @@ const registerCategory = async(req: Request, res: Response, next: NextFunction) 
       }) 
     }
   }
+
 }
 
-const findAllCategories = async(_: Request, res: Response) => {
+const findAllUser = async(req: Request, res: Response) => {
   try {
-    const categories = await categoryService.findCategories();
-    return res.json({
+    const users = await userService.findUsers()
+
+    return res.status(201).json({
       ok: true,
-      data: categories
-    });
+      data: users
+    })
 
   } catch (e) {
     if (e instanceof Error) {
@@ -39,18 +42,17 @@ const findAllCategories = async(_: Request, res: Response) => {
       }) 
     }
   }
+
 }
 
-
-const findCategoryById = async(req: Request, res: Response) => {
+const findUserById = async(req: Request, res: Response) => {
   try {
     const { id } = req.params
-    console.log({id});
-    const category = await categoryService.findCategoryById(id);
+    const user = await userService.findUserById(id);
 
     return res.json({
       ok: true,
-      data: category
+      data: user
     });
 
   } catch (e) {
@@ -61,17 +63,17 @@ const findCategoryById = async(req: Request, res: Response) => {
       }) 
     }
   }
-}
+};
 
-const updateCategory = async(req: Request, res: Response) => {
+const updateUser = async(req: Request, res: Response) => {
   try {
     const {params, body} = req;
     const {id} = params;
-    const categoryUpdated = await categoryService.updateCategory({id, name: body.name});
+    const categoryUpdated = await userService.updateUser({id, ...body});
 
     return res.status(200).json({
       ok: true,
-      msg: `La categoria con el id '${id}' fue actualizada`,
+      msg: `El usuario con el id '${id}' fue actualizado`,
       data: categoryUpdated
     });
 
@@ -85,15 +87,14 @@ const updateCategory = async(req: Request, res: Response) => {
   }
 }
 
-
-const deleteCategory = async(req: Request, res: Response, next: NextFunction) => {
+const deleteUser = async(req: Request, res: Response) => {
   try {
     const {id} = req.params;
-    await categoryService.deleteCategory(id);
+    await userService.deleteUser(id);
 
-    return res.json({
+    return res.status(200).json({
       ok: true,
-      msg: `La categoria con el id '${id}' fue eliminada`,
+      msg: `El usuario con el id '${id}' fue eliminado`,
     });
 
   } catch (e) {
@@ -106,10 +107,11 @@ const deleteCategory = async(req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+
 export default {
-  registerCategory,
-  findAllCategories,
-  findCategoryById,
-  updateCategory,
-  deleteCategory
+  registerUser,
+  findAllUser,
+  findUserById,
+  updateUser,
+  deleteUser
 }

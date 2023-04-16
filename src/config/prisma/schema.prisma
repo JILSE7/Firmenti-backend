@@ -11,10 +11,13 @@ model User {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String
+  phone     String
+  password  String    
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deletedAt DateTime
   products  Product[]
+  
+  @@unique([name, email, phone])
 }
 
 model Product {
