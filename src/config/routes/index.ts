@@ -12,8 +12,8 @@ const router = Router()
 
 //Definimos las rutas a nuestras collecciones
 router.use('/product', verifySession,productsRouter);
-router.use('/category', categoriesRouter);
-router.use('/user', userRoute);
+router.use('/category', verifySession,categoriesRouter);
+router.use('/user',userRoute);
 router.use('/auth', authRouter);
 
 

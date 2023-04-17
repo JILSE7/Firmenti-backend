@@ -23,6 +23,21 @@ const loginUser = async(auth: AuthDTO): Promise<IUserAuth> => {
   }
 }
 
+const revalidateSession = async(userId: string): Promise<IUserAuth> => {
+
+  if (!userId) throw new CustomError("userId no existe", 404)
+  
+  const user = await userService.findUser("id", userId)
+  
+  const token = generateToken(user.id)
+
+  return {
+    ...exclude(user, ["password"]),
+    accessToken: token
+  }
+}
+
 export default {
-  loginUser
+  loginUser,
+  revalidateSession
 }

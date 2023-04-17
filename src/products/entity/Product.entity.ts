@@ -6,6 +6,8 @@ export interface IProduct {
   image       : string;
   userId      : string;
   categoryId  : string;
+  createdAt   : Date;
+  updatedAt   : Date;
 } 
 
 
