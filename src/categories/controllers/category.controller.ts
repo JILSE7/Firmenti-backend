@@ -89,6 +89,7 @@ const updateCategory = async(req: Request, res: Response) => {
 const deleteCategory = async(req: Request, res: Response) => {
   try {
     const {id} = req.params;
+    console.log({id});
     await categoryService.deleteCategory(id);
 
     return res.json({

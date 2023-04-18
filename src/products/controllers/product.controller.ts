@@ -49,10 +49,31 @@ const findAllProducts = async(req: Request, res: Response) => {
 
 const findProductById = async(req: Request, res: Response) => {
   try {
-
     const { id } = req.params
     const product = await productServices.findProductById(id);
 
+    return res.json({
+      ok: true,
+      data: product
+    })
+
+  } catch (e) {
+    if (e instanceof Error) {
+      return res.status(e instanceof CustomError ? e.statusCode : 500).json({
+        ok: false,
+        error: e.message
+      }) 
+    }
+  }
+}
+
+
+const findProductByUser = async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    console.log({id});
+    const product = await productServices.findProductByUser(id);
+    
     return res.json({
       ok: true,
       data: product
@@ -102,7 +123,7 @@ const deleteProduct = async(req: Request, res: Response,) => {
 
     return res.json({
       ok: true,
-      msg: `El producto con el id '${id}' fue eliminada`,
+      msg: `El producto con el id '${id}' fue eliminado`,
     });
 
   } catch (e) {
@@ -121,6 +142,7 @@ export const productController = {
   registerProduct,
   findAllProducts,
   findProductById,
+  findProductByUser,
   updateProduct,
   deleteProduct
 }

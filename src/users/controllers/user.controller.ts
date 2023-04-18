@@ -29,7 +29,7 @@ const findAllUser = async(req: Request, res: Response) => {
   try {
     const users = await userService.findUsers()
 
-    return res.status(201).json({
+    return res.json({
       ok: true,
       data: users
     })
@@ -69,7 +69,8 @@ const updateUser = async(req: Request, res: Response) => {
   try {
     const {params, body} = req;
     const {id} = params;
-    const categoryUpdated = await userService.updateUser({id, ...body});
+    console.log({body});
+    const categoryUpdated = await userService.updateUser(id, body);
 
     return res.status(200).json({
       ok: true,
