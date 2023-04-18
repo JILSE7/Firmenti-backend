@@ -9,6 +9,7 @@ const app = express();
 let server:any;
 let token: any;
 
+const categoryId = '8240474f-29b4-4677-916b-09da9e686116'
 
 beforeAll(async() => {
   app.use(cors({
@@ -44,7 +45,7 @@ describe('Test in category controller', () => {
   test('should get only one record', async () => { 
     console.log({token});
     const response = await request(app)
-                    .get('/api/category/de3e107f-d2fc-4949-b981-fa00737438a9')
+                    .get(`/api/category/${categoryId}`)
                     .set('Accept', 'application/json')
                     .set({ Authorization: `Bearer ${token}` })
                     .expect('Content-Type', /json/)
@@ -56,7 +57,7 @@ describe('Test in category controller', () => {
 
   test('should get a error when category no exist', async () => { 
     const response = await request(app)
-                    .get('/api/category/cba2812e-e2e3-4032-9ef5-7e34147fbfa')
+                    .get(`/api/category/cba2812e-e2e3-4032-9ef5-7e34147fbfa`)
                     .set('Accept', 'application/json')
                     .set({ Authorization: `Bearer ${token}` })
                     .expect('Content-Type', /json/)

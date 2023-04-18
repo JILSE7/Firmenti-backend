@@ -10,7 +10,8 @@ const registerCategory = async(req: Request, res: Response, next: NextFunction) 
     
     return res.status(201).json({
       ok: true,
-      data: category
+      data: category,
+      msg: `Se ha creado una nueva categoria '${category.name}'`
     })
 
   } catch (e: unknown) {

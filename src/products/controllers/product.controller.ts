@@ -9,8 +9,8 @@ const registerProduct = async(req: Request, res: Response) => {
   try {    
     const body = req.body as {productData: string}
     const productData: ProductDTO = JSON.parse(body.productData)
-    console.log({productData});
     const productImage = req.file
+    console.log({productData, productImage});
 
     const product = await productServices.createProduct(productData, productImage!);
 

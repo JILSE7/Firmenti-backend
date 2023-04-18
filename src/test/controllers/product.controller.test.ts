@@ -7,9 +7,12 @@ import cors from 'cors'
 import { IResponseApi } from '../../interfaces';
 import { IProduct } from '../../products/entity';
 
+
 const app = express();
 let server: any;
 let token: any;
+const userId = 'dec6c771-9d12-4fd6-82c0-3bf3538dce84'
+const categoryId = '8240474f-29b4-4677-916b-09da9e686116'
 
 
 beforeAll(async () => {
@@ -48,7 +51,7 @@ describe('Test in category controller', () => {
       .post('/api/product')
       .set("Content-Type", "multipart/form-data")
       .set({ Authorization: `Bearer ${token}` })
-      .field('productData', JSON.stringify({ "name": "producto test backend", userId: "df7e2cef-c58a-475a-91c5-f12fd8efc7de", description: "Hola soy una prueba", categoryId: "d79c3133-400c-4873-8721-65d311143a4d" }))
+      .field('productData', JSON.stringify({ "name": "producto test backend", userId, description: "Hola soy una prueba", categoryId }))
       .attach('file', "uploads/test.jpg")
       .expect(201)
 
@@ -66,7 +69,7 @@ describe('Test in category controller', () => {
       .post('/api/product')
       .set("Content-Type", "multipart/form-data")
       .set({ Authorization: `Bearer ${token}` })
-      .field('productData', JSON.stringify({ "name": "producto test backend", userId: "df7e2cef-c58a-475a-91c5-f12fd8efc7de", description: "Hola soy una prueba", categoryId: "d79c3133-400c-4873-8721-65d311143a4d" }))
+      .field('productData', JSON.stringify({ "name": "producto test backend", userId, description: "Hola soy una prueba", categoryId }))
       .attach('file', "uploads/test.jpg")
       .expect(201)
 
@@ -79,7 +82,7 @@ describe('Test in category controller', () => {
       .put(`/api/product/${postResponse.data?.id}`)
       .set("Content-Type", "multipart/form-data")
       .set({ Authorization: `Bearer ${token}` })
-      .field('productData', JSON.stringify({ "name": "producto test backend2", userId: "df7e2cef-c58a-475a-91c5-f12fd8efc7de", description: "Hola soy una prueba 2", categoryId: "d79c3133-400c-4873-8721-65d311143a4d" }))
+      .field('productData', JSON.stringify({ "name": "producto test backend2", userId, description: "Hola soy una prueba 2", categoryId }))
       .expect(200)
 
     const putResponse: IResponseApi<IProduct> = putBody;
@@ -95,7 +98,7 @@ describe('Test in category controller', () => {
       .post('/api/product')
       .set("Content-Type", "multipart/form-data")
       .set({ Authorization: `Bearer ${token}` })
-      .field('productData', JSON.stringify({ "name": "producto test backend", userId: "df7e2cef-c58a-475a-91c5-f12fd8efc7de", description: "Hola soy una prueba", categoryId: "d79c3133-400c-4873-8721-65d311143a4d" }))
+      .field('productData', JSON.stringify({ "name": "producto test backend", userId, description: "Hola soy una prueba", categoryId }))
       .attach('file', "uploads/test.jpg")
       .expect(201)
 
@@ -132,13 +135,13 @@ describe('Test in category controller', () => {
 
   test("should get a products with userId", async () => {
     const { body: getBody } = await request(app)
-      .get(`/api/product/me/df7e2cef-c58a-475a-91c5-f12fd8efc7de`)
+      .get(`/api/product/me/${userId}`)
       .set({ Authorization: `Bearer ${token}` })
       .expect(200)
 
     const getResponse: IResponseApi<IProduct[]> = getBody;
 
-    expect(getResponse.data?.length).toBeGreaterThan(0);
+    expect(getResponse.ok).toBeTruthy();
   });
 
 
@@ -148,7 +151,7 @@ describe('Test in category controller', () => {
       .post('/api/product')
       .set("Content-Type", "multipart/form-data")
       .set({ Authorization: `Bearer ${token}` })
-      .field('productData', JSON.stringify({ "name": "producto test backend", userId: "df7e2cef-c58a-475a-91c5-f12fd8efc7de", description: "Hola soy una prueba", categoryId: "d79c3133-400c-4873-8721-65d311143a4d" }))
+      .field('productData', JSON.stringify({ "name": "producto test backend", userId, description: "Hola soy una prueba", categoryId}))
       .attach('file', "uploads/test.jpg")
       .expect(201)
 

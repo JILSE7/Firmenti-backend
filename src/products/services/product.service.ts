@@ -1,20 +1,13 @@
-import {v2 as cloudinary} from 'cloudinary'
+
 import { IProduct } from "../entity";
 import { ProductDTO } from '../dto';
 import { prisma } from "../../config/db";
 import { CustomError } from "../../utilities/customError.utilities";
 import { exclude } from "../../utilities";
+import cloudinary from "../../config/cloudinary";
 
 
-
-// Configuration 
-cloudinary.config({
-  cloud_name: "dxqnlqxa1",
-  api_key: "761577474779331",
-  api_secret: "aEahN3Iif7XNluShg6rUixvKlPw"
-});
-
-const createProduct = async(product: ProductDTO, img: Express.Multer.File) => {
+const createProduct = async(product: ProductDTO, img: Express.Multer.File): Promise<IProduct> => {
     const { name, categoryId, description, userId } = product;
 
     
@@ -50,7 +43,7 @@ const findProductByUser = async(userId: string): Promise<IProduct[]> => {
 };
 
 
-const updateProduct = async(id: string, {description, image, name}: ProductDTO, newImage?: Express.Multer.File): Promise<IProduct> => {
+const updateProduct = async(id: string, {description, image, name, categoryId}: ProductDTO, newImage?: Express.Multer.File): Promise<IProduct> => {
   if (!id) throw new CustomError("Id undefined, por favor mande un id valido", 400);
 
   let product = await prisma.product.findFirst({ where: { id } });  
@@ -70,7 +63,7 @@ const updateProduct = async(id: string, {description, image, name}: ProductDTO, 
   }
   
 
-  product = await prisma.product.update({where: { id }, data: { name, description, image }});  
+  product = await prisma.product.update({where: { id }, data: { name, description, image, categoryId }});  
   
   return product
 }

@@ -11,6 +11,7 @@ const app = express();
 let server: any;
 let token: any;
 
+const userId = 'dec6c771-9d12-4fd6-82c0-3bf3538dce84';
 
 beforeAll(async () => {
   app.use(cors({
@@ -111,7 +112,7 @@ describe('Test in user controller', () => {
 
   test('should get a specific user by id', async () => {
     const { body: getBody } = await request(app)
-      .get('/api/user/df7e2cef-c58a-475a-91c5-f12fd8efc7de')
+      .get(`/api/user/${userId}`)
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${token}` })
       .expect('Content-Type', /json/)
@@ -120,7 +121,7 @@ describe('Test in user controller', () => {
     const getResponse: IResponseApi<IUserWOP> = getBody;
 
     expect(getResponse.ok).toBeTruthy()
-    expect(getResponse.data?.id).toEqual("df7e2cef-c58a-475a-91c5-f12fd8efc7de")
+    expect(getResponse.data?.id).toEqual(userId)
   });
 
 

@@ -5,7 +5,7 @@ export interface IProduct {
   description : string;
   image       : string;
   userId      : string;
-  categoryId  : string;
+  categoryId  : string | null;
   createdAt   : Date;
   updatedAt   : Date;
 } 
