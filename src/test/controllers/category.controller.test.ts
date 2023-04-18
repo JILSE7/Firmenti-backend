@@ -9,7 +9,7 @@ const app = express();
 let server:any;
 let token: any;
 
-const categoryId = '8240474f-29b4-4677-916b-09da9e686116'
+const categoryId = process.env.CATEGORY_ID_TEST
 
 beforeAll(async() => {
   app.use(cors({
@@ -22,7 +22,7 @@ beforeAll(async() => {
   const {text} = await request(app)
                   .post('/api/auth/login')
                   .set('Accept', 'application/json')
-                  .send({email: 'saidnnnn@gmail.com', password: "123456"})
+                  .send({email: 'test@gmail.com', password: "123456"})
 
   const {data} = JSON.parse(text)
   token = data.accessToken

@@ -2,7 +2,6 @@
 import request, { Response } from 'supertest';
 import express from 'express';
 import router from '../../config/routes';
-import path from 'path';
 import cors from 'cors'
 import { IResponseApi } from '../../interfaces';
 import { IProduct } from '../../products/entity';
@@ -11,8 +10,8 @@ import { IProduct } from '../../products/entity';
 const app = express();
 let server: any;
 let token: any;
-const userId = 'dec6c771-9d12-4fd6-82c0-3bf3538dce84'
-const categoryId = '8240474f-29b4-4677-916b-09da9e686116'
+const userId = process.env.USER_ID_TEST
+const categoryId = process.env.CATEGORY_ID_TEST
 
 
 beforeAll(async () => {
@@ -26,7 +25,7 @@ beforeAll(async () => {
   const { text } = await request(app)
     .post('/api/auth/login')
     .set('Accept', 'application/json')
-    .send({ email: 'saidnnnn@gmail.com', password: "123456" })
+    .send({ email: 'test@gmail.com', password: "123456" })
 
   const { data } = JSON.parse(text)
   token = data.accessToken
