@@ -11,7 +11,7 @@ const app = express();
 let server: any;
 let token: any;
 
-const userId = 'dec6c771-9d12-4fd6-82c0-3bf3538dce84';
+const userId = process.env.USER_ID_TEST
 
 beforeAll(async () => {
   app.use(cors({
@@ -48,14 +48,14 @@ describe('Test in user controller', () => {
       .post('/api/user')
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${token}` })
-      .send({ name: 'test', email: "test@gmail.com", password: "123456", phone: "5589747895" })
+      .send({ name: 'test2', email: "test2@gmail.com", password: "123456", phone: "5589747896" })
       .expect('Content-Type', /json/)
       .expect(201)
 
     const postResponse: IResponseApi<IUserWOP> = postBody;
 
     expect(postResponse.data?.id).toBeDefined();
-    expect(postResponse.data?.name).toEqual("test");
+    expect(postResponse.data?.name).toEqual("test2");
     expect(postResponse.data?.createdAt).toBeDefined();
 
     await rollBack(`/api/user/${postResponse.data?.id}`);
@@ -66,14 +66,14 @@ describe('Test in user controller', () => {
       .post('/api/user')
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${token}` })
-      .send({ name: 'test', email: "test@gmail.com", password: "123456", phone: "5589747895" })
+      .send({ name: 'test3', email: "test3@gmail.com", password: "123456", phone: "5589747895" })
       .expect('Content-Type', /json/)
       .expect(201)
 
     const postResponse: IResponseApi<IUserWOP> = postBody;
 
     expect(postResponse.data?.id).toBeDefined();
-    expect(postResponse.data?.name).toEqual("test");
+    expect(postResponse.data?.name).toEqual("test3");
     expect(postResponse.data?.createdAt).toBeDefined();
 
     const { body: putBody } = await request(app)
@@ -125,12 +125,12 @@ describe('Test in user controller', () => {
   });
 
 
-  test('should get a specific user by id', async () => {
+  test('should delete user by id', async () => {
     const { body: postBody } = await request(app)
       .post('/api/user')
       .set('Accept', 'application/json')
       .set({ Authorization: `Bearer ${token}` })
-      .send({ name: 'test', email: "test@gmail.com", password: "123456", phone: "5589747895" })
+      .send({ name: 'test4', email: "test4@gmail.com", password: "123456", phone: "5589747894" })
       .expect('Content-Type', /json/)
       .expect(201)
 
