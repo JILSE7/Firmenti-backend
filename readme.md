@@ -60,13 +60,20 @@ Sistema de rutas:
 
 ### Prerequisites
 * node 19.0.0
+* docker
+* docker-compose
 
 
 ### Installation
 
 1. Clona el repositorio
 
-2. Instala dependencias
+2. Levanta la db
+```sh
+ docker-compose-up
+```
+
+3. Instala dependencias
 
 ```sh
 npm install 
@@ -74,17 +81,17 @@ npm install
 yarn install
 ```
 
-3. Corre el proyecto
+4. Corre el proyecto
 ```sh
 npm run dev
 
 yarn dev
 ```
 
-4. Correr pruebas E2E 
+5. Correr pruebas unitarias
 ```sh
-npx playwright test
+yarn jest
 ```
 
 ### Uso
-Al levantarse el proyecto primero deberas registrarte como usuario para poder ingresar.
+Antes de correr las pruebas unitarias asegurate de crear un usuario con
