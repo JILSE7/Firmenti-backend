@@ -1,5 +1,5 @@
 import { prisma } from "../../config/db";
-import { CustomError } from "../../utilities/customError";
+import { CustomError } from "../../utilities/customError.utilities";
 import { CategoryDTO } from "../dto/category.dto";
 import { ICategory } from "../entity";
 
@@ -47,7 +47,7 @@ const deleteCategory = async(id: string): Promise<ICategory> => {
 
   category = await prisma.category.delete({ where: { id: category.id } });  
   
-  return category
+  return category;
 }
 
 

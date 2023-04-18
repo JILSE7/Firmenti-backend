@@ -11,10 +11,13 @@ model User {
   id        String    @id @default(uuid())
   email     String    @unique
   name      String
+  phone     String
+  password  String    
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  deletedAt DateTime
   products  Product[]
+  
+  @@unique([name, email, phone])
 }
 
 model Product {
@@ -23,13 +26,17 @@ model Product {
   description String
   image       String
   userId      String
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   user        User     @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  @@unique([name, description, userId])
 }
 
 model Category {
   id       String    @id @default(uuid())
   name     String
   products Product[]
+  @@unique([name])
 }
