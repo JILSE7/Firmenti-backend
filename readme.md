@@ -94,4 +94,4 @@ yarn jest
 ```
 
 ### Uso
-Antes de correr las pruebas unitarias asegurate de crear un usuario con
+Antes de correr las pruebas unitarias asegurate de crear tanto un usuario de prueba como tambien una categoria para su correcta ejecución
