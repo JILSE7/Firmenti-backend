@@ -33,7 +33,6 @@ afterAll(async() => {
   await server.close()
 })
 const rollBack = async(path: string):Promise<Response> => {
-  console.log({path});
   return await request(app)
                     .delete(path)
                     .set('Accept', 'application/json')
@@ -43,7 +42,6 @@ const rollBack = async(path: string):Promise<Response> => {
 
 describe('Test in category controller', () => { 
   test('should get only one record', async () => { 
-    console.log({token});
     const response = await request(app)
                     .get(`/api/category/${categoryId}`)
                     .set('Accept', 'application/json')
@@ -78,7 +76,7 @@ describe('Test in category controller', () => {
 
     expect(response.ok).toBe(true)
     expect(response.data?.name).toEqual("Ropa y accesorios")
-    console.log({response});
+
     await rollBack(`/api/category/${response.data?.id}`)
   });
 
@@ -129,8 +127,7 @@ describe('Test in category controller', () => {
     const {body : deleteBody} = await request(app)
                     .delete(`/api/category/${postResponse.data?.id}`)
                     .set({ Authorization: `Bearer ${token}` })
-                    
-    console.log({deleteBody});
+
     const deleteResponse: IResponseApi<ICategory> = deleteBody
     // expect(deleteResponse.data?.name).toBe("Belleza y cuidado personal TEST")
     expect(deleteResponse.msg).toBe(`La categoria con el id '${postResponse.data?.id}' fue eliminada`)

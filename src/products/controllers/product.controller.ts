@@ -10,7 +10,6 @@ const registerProduct = async(req: Request, res: Response) => {
     const body = req.body as {productData: string}
     const productData: ProductDTO = JSON.parse(body.productData)
     const productImage = req.file
-    console.log({productData, productImage});
 
     const product = await productServices.createProduct(productData, productImage!);
 
@@ -71,7 +70,6 @@ const findProductById = async(req: Request, res: Response) => {
 const findProductByUser = async(req: Request, res: Response) => {
   try {
     const { id } = req.params
-    console.log({id});
     const product = await productServices.findProductByUser(id);
     
     return res.json({
@@ -97,7 +95,6 @@ const updateProduct = async(req: Request, res: Response) => {
     const body = req.body
     const productData: ProductDTO = JSON.parse(body.productData)
     const productImage = req.file
-    console.log({productData});
     const categoryUpdated = await productServices.updateProduct(id ,{...productData}, productImage);
 
     return res.status(200).json({

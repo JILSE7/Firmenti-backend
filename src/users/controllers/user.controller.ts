@@ -69,7 +69,6 @@ const updateUser = async(req: Request, res: Response) => {
   try {
     const {params, body} = req;
     const {id} = params;
-    console.log({body});
     const categoryUpdated = await userService.updateUser(id, body);
 
     return res.status(200).json({

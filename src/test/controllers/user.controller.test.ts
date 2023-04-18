@@ -85,7 +85,6 @@ describe('Test in user controller', () => {
 
 
     const putResponse: IResponseApi<IUserWOP> = putBody;
-    console.log({ putResponse });
     expect(putResponse.data?.id).toEqual(postResponse.data?.id);
     expect(putResponse.data?.name).not.toEqual("test");
     expect(putResponse.data?.name).toEqual("test25");

@@ -46,7 +46,6 @@ const findAllCategories = async(_: Request, res: Response) => {
 const findCategoryById = async(req: Request, res: Response) => {
   try {
     const { id } = req.params
-    console.log({id});
     const category = await categoryService.findCategoryById(id);
 
     return res.json({
@@ -90,7 +89,6 @@ const updateCategory = async(req: Request, res: Response) => {
 const deleteCategory = async(req: Request, res: Response) => {
   try {
     const {id} = req.params;
-    console.log({id});
     await categoryService.deleteCategory(id);
 
     return res.json({

@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import { authService } from "../services";
 import { AuthDTO } from "../dto";
-import { CustomError, generateToken } from "../../utilities";
+import { CustomError } from "../../utilities";
 
 
 const loginUser = async(req: Request, res: Response) => {
   try {
     const auth: AuthDTO = req.body
-    console.log({auth});
     const user = await authService.loginUser(auth);
 
     return res.status(200).json({
